@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    image: tomer/find-my-kids:latest
+    ports:
+      - "80:80"
+    environment:
+      - AWS_REGION=${AWS_REGION}
+      - AWS_KEY=${AWS_KEY}
+      - AWS_SECRET=${AWS_SECRET}
+      - GREEN_API_INSTANCE=${GREEN_API_INSTANCE}
+      - GREEN_API_TOKEN=${GREEN_API_TOKEN}
+    volumes:
+      - ./find-my-kids/images:/app/images
+      - ./find-my-kids/config:/app/config
+    restart: unless-stopped 

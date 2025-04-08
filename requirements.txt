@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+python-multipart
+loguru
+boto3
+requests
+PyYAML
+whatsapp-api-client-python
+whatsapp-chatbot-python
+python-dotenv
+httpx
+fastapi-cache2
