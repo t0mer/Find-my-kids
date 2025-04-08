@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find my kids|Contacts & Groups</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- DataTables Bootstrap4 CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Contacts & Groups</h2>
+    <table id="dataTable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data rows will be added here dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Fetch data from the /data endpoint
+      $.ajax({
+        url: '/chats',
+        dataType: 'json',
+        success: function(data) {
+          var tableBody = $('#dataTable tbody');
+          // Loop through the JSON array and create table rows, filtering out items with an empty name
+          $.each(data, function(index, item) {
+            // Check if the name field exists and is not empty after trimming whitespace
+            if (item.name && item.name.trim() !== "") {
+              var row = '<tr>' +
+                          '<td>' + item.id + '</td>' +
+                          '<td>' + item.name + '</td>' +
+                        '</tr>';
+              tableBody.append(row);
+            }
+          });
+          // Initialize DataTables with search and pagination
+          $('#dataTable').DataTable();
+        },
+        error: function(xhr, status, error) {
+          console.error("Failed to load JSON data: " + error);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
