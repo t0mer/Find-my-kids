@@ -37,18 +37,40 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 
 ### 2. Green API Setup
 
-#### Create a Green API Account
-1. Go to [Green API](https://green-api.com/)
-2. Click "Sign Up" and create an account
-3. Verify your email address
+#### Setup Green API account
+Nevigate to [https://green-api.com/en](https://green-api.com/en) and register for a new account:
+![Register](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/register.png)
 
-#### Get API Credentials
-1. Log in to your Green API account
-2. Go to "API Settings"
-3. Create a new instance
-4. Note down your:
-   - Instance ID
-   - API Token
+Fill up your details and click on **Register**:
+![Create Account](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_acoount.png)
+
+
+Next, click on the "Create an instance":
+![Create Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_instance.png)
+
+
+Select the "Developer" instance (Free):
+![Developer Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/developer_instance.png)
+
+
+Copy the InstanceId and Token, we need it for the integration settings:
+![Instance Details](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/instance_details.png)
+
+Next, Lets connect our whatsapp with green-api. On the left side, Under API --> Account, click on QR and copy the QR URL to the browser and click on "Scan QR code"
+
+![Send QR](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/send_qr.png)
+
+![Scan QR](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/scan_qr.png)
+
+Next, Scan the QR code to link you whatsapp with Green API:
+
+![QR Code](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/qr.png)
+
+After the account link, you will notice that the instance is active by the green light in the instance header:
+![Active Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/active_instance.png)
+
+
+
 
 #### ***Important Note:***
 Do not set webhook url for your instance, otherwise the bot will not work.
