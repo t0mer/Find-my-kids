@@ -11,3 +11,4 @@ whatsapp-chatbot-python
 python-dotenv
 httpx
 fastapi-cache2
+Pillow
