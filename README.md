@@ -153,3 +153,12 @@ You can click the "re-train" button to re-train the model with the pictures.
 
 
 *Congrats, you can now use the bot.*
+
+
+### Things to know
+
+AWS Rekognition is included in the Free Tier for 12 Months (5000 images per month):
+![Rekognition free tier](screenshots/rekognition-free.png)
+
+After 12 months, The pricing will be 0.001$ per API call:
+![Rekognition pricing](screenshots/rekognition-pricing.png)
