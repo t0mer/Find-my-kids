@@ -18,7 +18,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY app /app
+COPY app .
 
 # Create necessary directories
 RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config
@@ -34,4 +34,6 @@ ENV GREEN_API_TOKEN=
 EXPOSE 80
 
 # Command to run the application
-CMD ["python", "-m", "app.py"] 
+# CMD ["python", "-m", "/app/app.py"] 
+
+ENTRYPOINT python app.py
