@@ -76,10 +76,28 @@ Do not set webhook url for your instance, otherwise the bot will not work.
 
 ### 4. Running the Application
 
-1. Pull the latest image:
-   ```bash
-   docker-compose pull
+1. Use the following docker-compose.yaml :
+   ```yaml
+   services:
+  app:
+    image: techblog/find-my-kids:latest
+    ports:
+      - "7020:7020"
+    environment:
+      - AWS_REGION=${AWS_REGION}
+      - AWS_KEY=${AWS_KEY}
+      - AWS_SECRET=${AWS_SECRET}
+      - GREEN_API_INSTANCE=${GREEN_API_INSTANCE}
+      - GREEN_API_TOKEN=${GREEN_API_TOKEN}
+    volumes:
+      - ./find-my-kids/images:/app/images
+      - ./find-my-kids/config:/app/config
+    restart: unless-stopped 
    ```
+Where:
+* /find-my-kids/images is the volume for the model training images and downloaded images.
+* ./find-my-kids/config is the path to the config file.
+
 
 2. Start the application:
    ```bash
