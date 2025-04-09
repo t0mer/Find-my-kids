@@ -150,3 +150,6 @@ In the Gallery tab, you will see all the pictured used to train the model:
 ![re-train](screenshots/re-train.png)
 
 You can click the "re-train" button to re-train the model with the pictures.
+
+
+*Congrats, you can now use the bot.*
