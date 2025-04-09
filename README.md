@@ -4,9 +4,9 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 
 ## Prerequisites
 
-- Docker and Docker Compose installed
-- AWS Account
-- Green API Account
+- [Docker and Docker Compose installed](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
+- [AWS Account](https://signin.aws.amazon.com/signup?request_type=register)
+- [Green API Account](https://green-api.com/)
 
 ## Setup Instructions
 
@@ -31,6 +31,9 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 11. Click "Next: Review"
 12. Click "Create user"
 13. **IMPORTANT**: Download the CSV file containing your access key and secret key
+
+[![YouTube](http://i.ytimg.com/vi/lIdh92JmWtg/hqdefault.jpg)](https://www.youtube.com/watch?v=lIdh92JmWtg)
+
 
 ### 2. Green API Setup
 
