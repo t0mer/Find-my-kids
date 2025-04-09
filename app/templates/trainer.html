@@ -52,6 +52,10 @@
       
       <!-- Gallery Tab Content -->
       <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
+        <!-- Re-Train button -->
+        <div class="mt-3 mb-3">
+          <button id="retrainBtn" class="btn btn-warning">Re-Train</button>
+        </div>
         <div class="mt-4">
           <div id="galleryContent" class="row">
             <!-- Dynamically loaded images for the selected collection -->
@@ -73,7 +77,7 @@
       // Load collections from /collections endpoint
       $.getJSON('/collections', function(data) {
         const select = $('#collectionSelect');
-        // Assuming the JSON response is: { "collections": ["Rani", "Hili", "Sagie"] }
+        // Assuming JSON response: { "collections": ["Rani", "Hili", "Sagie"] }
         data.collections.forEach(function(collectionId) {
           select.append(new Option(collectionId, collectionId));
         });
@@ -93,7 +97,7 @@
         }
       });
 
-      // Handle form submission: upload image and call /train endpoint
+      // Handle form submission for uploading image and triggering training
       $("#uploadForm").submit(function(e) {
         e.preventDefault();
         const formData = new FormData();
@@ -110,27 +114,87 @@
         const selectedCollection = $("#collectionSelect").val();
         formData.append("image", fileInput.files[0]);
         formData.append("collection", selectedCollection);
-
+        
+        // Show a loader using SweetAlert2 while training is in progress.
+        Swal.fire({
+          title: 'Training in progress...',
+          html: 'Please wait while the model is being trained.',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        
         $.ajax({
-          url: '/train',  // Endpoint for training upload
+          url: '/train',  // Endpoint for image upload based training
           type: 'POST',
           data: formData,
           processData: false,
           contentType: false,
           success: function(response) {
+            Swal.close();
             Swal.fire({
               title: 'Success!',
               text: 'Image uploaded and training initiated!',
               icon: 'success',
               confirmButtonText: 'OK'
             });
-            // Refresh the gallery for the selected collection after successful upload.
+            // Refresh gallery for the selected collection after successful upload.
             loadGallery(selectedCollection);
           },
           error: function(xhr, status, error) {
+            Swal.close();
             Swal.fire({
               title: 'Error!',
               text: "Error during upload: " + error,
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        });
+      });
+
+      // Handle click event on "Re-Train" button in the Gallery tab.
+      $("#retrainBtn").click(function() {
+        const selectedCollection = $("#collectionSelect").val();
+        if (!selectedCollection) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'No collection selected.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+        // Show loader during retraining.
+        Swal.fire({
+          title: 'Retraining in progress...',
+          html: 'Please wait while the model is being retrained.',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        $.ajax({
+          url: '/retrain',
+          type: 'POST',
+          data: { collection: selectedCollection },
+          success: function(response) {
+            Swal.close();
+            Swal.fire({
+              title: 'Success!',
+              text: response.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+            // Optionally, reload gallery if necessary
+            loadGallery(selectedCollection);
+          },
+          error: function(xhr, status, error) {
+            Swal.close();
+            Swal.fire({
+              title: 'Error!',
+              text: "Error during retraining: " + error,
               icon: 'error',
               confirmButtonText: 'OK'
             });
@@ -150,7 +214,7 @@
           gallery.empty();
           if (data.images && data.images.length > 0) {
             data.images.forEach(function(imageUrl) {
-              // Each image is displayed as a thumbnail in a column.
+              // Display each image thumbnail in a Bootstrap grid column.
               const imgElem = $(`
                 <div class="col-md-3 mb-3">
                   <img src="${imageUrl}" alt="Image" class="img-fluid img-thumbnail">

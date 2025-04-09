@@ -111,6 +111,26 @@ async def trainer_page(request: Request):
     # Render the HTML page using the "index.html" template
     return templates.TemplateResponse("trainer.html", {"request": request})
 
+@app.post("/retrain", response_class=JSONResponse)
+async def retrain_model(collection: str = Form(...)):
+    """
+    Endpoint to trigger the re-training command for a given collection.
+    """
+    try:
+        success = trainer.train(collection)
+        if success:
+            return {
+                "status": 200,
+                "message": "Images processed successfully",
+                "collection_id": collection
+            }
+        else:
+            # Processing failed, so raise an exception.
+            raise Exception("Image processing failed")
+    except Exception as e:
+        return JSONResponse(content={"error": f"Failed to save file: {e}"}, status_code=500)
+
+
 @app.get("/trainer/images/{collection}", response_class=JSONResponse)
 async def get_trainer_images(collection: str):
     """
