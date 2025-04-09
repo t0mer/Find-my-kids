@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   app:
-    image: tomer/find-my-kids:latest
+    image: techblog/find-my-kids:latest
     ports:
-      - "80:80"
+      - "7020:7020"
     environment:
       - AWS_REGION=${AWS_REGION}
       - AWS_KEY=${AWS_KEY}
