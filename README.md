@@ -127,3 +127,8 @@ Next, select the collecion you would like to train, Select a picture and click "
 ![Upload and Train](screenshots/upload-and-train.png)
 
 ![Train Completed](screenshots/train-completed.png)
+
+In the Gallery tab, you will see all the pictured used to train the model:
+![re-train](screenshots/re-train.png)
+
+You can click the "re-train" button to re-train the model with the pictures.
