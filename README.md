@@ -50,6 +50,11 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
    - Instance ID
    - API Token
 
+#### ***Important Note:***
+Do not set webhook url for your instance, otherwise the bot will not work.
+![Green API webhook](screenshots/green-api-webhook.png)
+
+
 ### 3. Environment Setup
 
 1. Copy the `.env.example` file to `.env`:
@@ -85,35 +90,40 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 
 ## Usage
 
-1. Send an image to your WhatsApp number
-2. The bot will process the image and check for matches
-3. If a match is found, you'll receive a notification
+### Configuration file
+Under the config folder you will find a file named *config.yaml* with the following content:
 
-## API Endpoints
+```yaml
+kids:
+  Kid1: 
+    collection_id: Kid1
+    chat_ids:
+      - 000000000000000000@g.us
 
-- `POST /train` - Train a new face collection
-- `DELETE /collection/delete` - Delete a face collection
+target: 972000000000-1000000000@g.us
+```
 
-## Troubleshooting
+* Kid1 is the name of the kid/person
+* collection_id: The Id of the collection in AWS rekognition.
+* chat_ids: list of whatsapp chats (Groups or Contacts) to monitor.
+* target: The target group or contact to forward the pictures to.
 
-If you encounter any issues:
+In order to get the list of groups, enter the following URL: http://[server_ip]:[port]/contacts
 
-1. Check the logs:
-   ```bash
-   docker-compose logs -f
-   ```
+The web page will contain a table with the list of contacts and group:
 
-2. Verify your environment variables are set correctly
-3. Ensure your AWS and Green API credentials are valid
-4. Check that your WhatsApp number is properly linked to Green API
+![Contacts and Groups](screenshots/greenapi-contacts.png)
 
-## Security Notes
+**After updating the config file, restart the container to reload the configuration**
 
-- Never commit your `.env` file to version control
-- Keep your AWS and Green API credentials secure
-- Regularly rotate your access keys
-- Use environment variables for sensitive data
+### Training
+In order to train the Rekognition model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
 
-## Support
+An error may popup, it is because there are no images related for the collections, just click on OK.
+![No images](screenshots/no-images-error.png)
 
-For support, please open an issue in the GitHub repository. 
+Next, select the collecion you would like to train, Select a picture and click "Upload and Train" button:
+
+![Upload and Train](screenshots/upload-and-train.png)
+
+![Train Completed](screenshots/train-completed.png)
