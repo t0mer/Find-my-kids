@@ -2,6 +2,10 @@
 
 This application uses AWS Rekognition and WhatsApp Green API to detect and notify when specific faces appear in images sent to a WhatsApp group.
 
+## Table of Contents
+
+[_TOC_]
+
 ## Prerequisites
 
 - [Docker and Docker Compose installed](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
@@ -17,6 +21,8 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 1. Go to [AWS Sign Up](https://signin.aws.amazon.com/signup?request_type=register)
 2. Follow the registration process
 3. Complete the account verification
+
+[![YouTube](http://i.ytimg.com/vi/lIdh92JmWtg/hqdefault.jpg)](https://www.youtube.com/watch?v=lIdh92JmWtg)
 
 #### Create IAM User and Access Keys
 
@@ -39,8 +45,6 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 17. Write a Description for the access key (e.g., `find-my-kids-bot`)
 18. Click "Create access key"
 19. **IMPORTANT**: Download the CSV file containing your access key and secret key
-
-[![YouTube](http://i.ytimg.com/vi/lIdh92JmWtg/hqdefault.jpg)](https://www.youtube.com/watch?v=lIdh92JmWtg)
 
 ### 2. Green API Setup
 
