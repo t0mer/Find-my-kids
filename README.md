@@ -13,11 +13,13 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 ### 1. AWS Account Setup
 
 #### Create an AWS Account
+
 1. Go to [AWS Sign Up](https://signin.aws.amazon.com/signup?request_type=register)
 2. Follow the registration process
 3. Complete the account verification
 
 #### Create IAM User and Access Keys
+
 1. Sign in to the AWS Management Console
 2. Navigate to IAM (Identity and Access Management)
 3. Click on "Users" in the left navigation pane
@@ -34,24 +36,21 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 
 [![YouTube](http://i.ytimg.com/vi/lIdh92JmWtg/hqdefault.jpg)](https://www.youtube.com/watch?v=lIdh92JmWtg)
 
-
 ### 2. Green API Setup
 
 #### Setup Green API account
+
 Nevigate to [https://green-api.com/en](https://green-api.com/en) and register for a new account:
 ![Register](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/register.png)
 
 Fill up your details and click on **Register**:
 ![Create Account](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_acoount.png)
 
-
 Next, click on the "Create an instance":
 ![Create Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_instance.png)
 
-
 Select the "Developer" instance (Free):
 ![Developer Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/developer_instance.png)
-
 
 Copy the InstanceId and Token, we need it for the integration settings:
 ![Instance Details](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/instance_details.png)
@@ -69,23 +68,22 @@ Next, Scan the QR code to link you whatsapp with Green API:
 After the account link, you will notice that the instance is active by the green light in the instance header:
 ![Active Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/active_instance.png)
 
-
-
-
 #### ***Important Note:***
+
 Do not set webhook url for your instance, otherwise the bot will not work.
 ![Green API webhook](screenshots/green-api-webhook.png)
-
 
 ### 3. Environment Setup
 
 1. Copy the `.env.example` file to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
+
+```bash
+cp .env.example .env
+```
 
 2. Edit the `.env` file with your credentials:
-   ```
+
+```bash
    # AWS Credentials
    AWS_REGION=your_aws_region
    AWS_KEY=your_aws_access_key
@@ -94,12 +92,13 @@ Do not set webhook url for your instance, otherwise the bot will not work.
    # WhatsApp API Credentials
    GREEN_API_INSTANCE=your_whatsapp_instance_id
    GREEN_API_TOKEN=your_whatsapp_api_token
-   ```
+```
 
 ### 4. Running the Application
 
 1. Use the following docker-compose.yaml :
-   ```yaml
+
+```yaml
    services:
   app:
     image: techblog/find-my-kids:latest
@@ -115,22 +114,25 @@ Do not set webhook url for your instance, otherwise the bot will not work.
       - ./find-my-kids/images:/app/images
       - ./find-my-kids/config:/app/config
     restart: unless-stopped 
-   ```
-Where:
-* /find-my-kids/images is the volume for the model training images and downloaded images.
-* ./find-my-kids/config is the path to the config file.
+```
 
+Where:
+
+- /find-my-kids/images is the volume for the model training images and downloaded images.
+- ./find-my-kids/config is the path to the config file.
 
 2. Start the application:
-   ```bash
-   docker-compose up -d
-   ```
+
+```bash
+docker-compose up -d
+```
 
 3. The application will be available at `http://[Server_IP]:[Port]`
 
 ## Usage
 
 ### Configuration file
+
 Under the config folder you will find a file named *config.yaml* with the following content:
 
 ```yaml
@@ -143,21 +145,22 @@ kids:
 target: 972000000000-1000000000@g.us
 ```
 
-* Kid1 is the name of the kid/person
-* collection_id: The Id of the collection in AWS rekognition.
-* chat_ids: list of whatsapp chats (Groups or Contacts) to monitor.
-* target: The target group or contact to forward the pictures to.
+- Kid1 is the name of the kid/person
+- collection_id: The Id of the collection in AWS rekognition.
+- chat_ids: list of whatsapp chats (Groups or Contacts) to monitor.
+- target: The target group or contact to forward the pictures to.
 
-In order to get the list of groups, enter the following URL: http://[server_ip]:[port]/contacts
+In order to get the list of groups, enter the following URL: `http://[server_ip]:[port]/contacts`
 
 The web page will contain a table with the list of contacts and group:
 
 ![Contacts and Groups](screenshots/greenapi-contacts.png)
 
-**After updating the config file, restart the container to reload the configuration**
+> **After updating the config file, restart the container to reload the configuration**
 
 ### Training
-In order to train the Rekognition model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
+
+In order to train the Rekognition model open your browser and navigate to: `http://[SERVER_IP]:[PORT]/trainer`
 
 An error may popup, it is because there are no images related for the collections, just click on OK.
 ![No images](screenshots/no-images-error.png)
@@ -173,9 +176,7 @@ In the Gallery tab, you will see all the pictured used to train the model:
 
 You can click the "re-train" button to re-train the model with the pictures.
 
-
 *Congrats, you can now use the bot.*
-
 
 ### Things to know
 
