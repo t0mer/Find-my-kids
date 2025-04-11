@@ -25,14 +25,20 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 3. Click on "Users" in the left navigation pane
 4. Click "Create user"
 5. Enter a username (e.g., `find-my-kids-bot`)
-6. Select "Access key - Programmatic access"
-7. Click "Next: Permissions"
-8. Click "Attach existing policies directly"
-9. Search for and select "AmazonRekognitionFullAccess"
-10. Click "Next: Tags" (optional)
-11. Click "Next: Review"
-12. Click "Create user"
-13. **IMPORTANT**: Download the CSV file containing your access key and secret key
+6. Click "Next"
+7. Click "Attach policies directly"
+8. Search for and select "AmazonRekognitionFullAccess"
+9. Click "Next"
+10. Now Review and create (you can skip the tags step)
+11. Click "Create user"
+12. Select the user you just created and click on the "Users" tab
+13. Go to the "Security credentials" tab
+14. Click "Create access key"
+15. Select "CLI" as the access key type
+16. Click "Next"
+17. Write a Description for the access key (e.g., `find-my-kids-bot`)
+18. Click "Create access key"
+19. **IMPORTANT**: Download the CSV file containing your access key and secret key
 
 [![YouTube](http://i.ytimg.com/vi/lIdh92JmWtg/hqdefault.jpg)](https://www.youtube.com/watch?v=lIdh92JmWtg)
 
