@@ -4,7 +4,22 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 
 ## Table of Contents
 
-[_TOC_]
+- [Find My Kids - WhatsApp Face Recognition Bot](#find-my-kids---whatsapp-face-recognition-bot)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Setup Instructions](#setup-instructions)
+    - [1. AWS Account Setup](#1-aws-account-setup)
+      - [Create an AWS Account](#create-an-aws-account)
+      - [Create IAM User and Access Keys](#create-iam-user-and-access-keys)
+    - [2. Green API Setup](#2-green-api-setup)
+      - [Setup Green API account](#setup-green-api-account)
+      - [***Important Note:***](#important-note)
+    - [3. Environment Setup](#3-environment-setup)
+    - [4. Running the Application](#4-running-the-application)
+  - [Usage](#usage)
+    - [Configuration file](#configuration-file)
+    - [Training](#training)
+    - [Things to know](#things-to-know)
 
 ## Prerequisites
 
