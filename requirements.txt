@@ -15,3 +15,4 @@ tf-keras
 deepface
 opencv-python
 numpy
+joblib
