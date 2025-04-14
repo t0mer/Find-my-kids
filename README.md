@@ -5,37 +5,10 @@ This application uses AWS Rekognition and WhatsApp Green API to detect and notif
 ## Prerequisites
 
 - [Docker and Docker Compose installed](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
-- [AWS Account](https://signin.aws.amazon.com/signup?request_type=register)
 - [Green API Account](https://green-api.com/)
 
 ## Setup Instructions
-
-### 1. AWS Account Setup
-
-#### Create an AWS Account
-1. Go to [AWS Sign Up](https://signin.aws.amazon.com/signup?request_type=register)
-2. Follow the registration process
-3. Complete the account verification
-
-#### Create IAM User and Access Keys
-1. Sign in to the AWS Management Console
-2. Navigate to IAM (Identity and Access Management)
-3. Click on "Users" in the left navigation pane
-4. Click "Create user"
-5. Enter a username (e.g., `find-my-kids-bot`)
-6. Select "Access key - Programmatic access"
-7. Click "Next: Permissions"
-8. Click "Attach existing policies directly"
-9. Search for and select "AmazonRekognitionFullAccess"
-10. Click "Next: Tags" (optional)
-11. Click "Next: Review"
-12. Click "Create user"
-13. **IMPORTANT**: Download the CSV file containing your access key and secret key
-
-[![YouTube](http://i.ytimg.com/vi/lIdh92JmWtg/hqdefault.jpg)](https://www.youtube.com/watch?v=lIdh92JmWtg)
-
-
-### 2. Green API Setup
+### 1. Green API Setup
 
 #### Setup Green API account
 Nevigate to [https://green-api.com/en](https://green-api.com/en) and register for a new account:
@@ -77,7 +50,7 @@ Do not set webhook url for your instance, otherwise the bot will not work.
 ![Green API webhook](screenshots/green-api-webhook.png)
 
 
-### 3. Environment Setup
+### 2. Environment Setup
 
 1. Copy the `.env.example` file to `.env`:
    ```bash
@@ -86,11 +59,6 @@ Do not set webhook url for your instance, otherwise the bot will not work.
 
 2. Edit the `.env` file with your credentials:
    ```
-   # AWS Credentials
-   AWS_REGION=your_aws_region
-   AWS_KEY=your_aws_access_key
-   AWS_SECRET=your_aws_secret_key
-
    # WhatsApp API Credentials
    GREEN_API_INSTANCE=your_whatsapp_instance_id
    GREEN_API_TOKEN=your_whatsapp_api_token
