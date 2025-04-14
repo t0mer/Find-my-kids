@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app .
 
 # Create necessary directories
-RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config
+RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config /app/classifiers
 
 # Set environment variables
 ENV AWS_REGION=
