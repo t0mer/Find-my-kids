@@ -1,6 +1,5 @@
 import os
 import yaml
-import boto3
 import requests
 import shutil
 from pathlib import Path
@@ -140,33 +139,4 @@ class Utils:
         except Exception as e:
             logger.error(f"Error downloading image: {e}")
             raise Exception(e)
-
-    def delete_rekognition_collection(self, collection_id: str) -> None:
-        """
-        Delete an AWS Rekognition collection.
-        
-        Args:
-            collection_id (str): The ID of the collection to delete
-            
-        Raises:
-            Exception: If there's an error during deletion
-        """
-        try:
-            client = boto3.client(
-                'rekognition',
-                region_name=os.getenv("AWS_REGION"),
-                aws_access_key_id=os.getenv("AWS_KEY"),
-                aws_secret_access_key=os.getenv("AWS_SECRET")
-            )
-            
-            response = client.delete_collection(CollectionId=collection_id)
-            
-            if response.get("StatusCode") == 200:
-                logger.info(f"Collection '{collection_id}' deleted successfully.")
-            else:
-                logger.error(f"Failed to delete collection '{collection_id}'. Response: {response}")
-                
-        except Exception as e:
-            logger.error(f"Error deleting collection: {e}")
-            raise
 
