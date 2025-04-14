@@ -21,7 +21,7 @@ from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi_cache.backends.inmemory import InMemoryBackend
 from whatsapp_chatbot_python import GreenAPIBot, Notification
 from fastapi import FastAPI, Request, HTTPException, Depends, Header, UploadFile, File, Form
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -60,7 +60,7 @@ def message_handler(notification: Notification) -> None:
         collection_id = utils.get_collection_id()
         if collection_id is not None:
             if utils.download_image(collection_id):
-                success = finder.find(collection_id=collection_id, image_path=utils.download_path,label=collection_id)
+                success, max_probability = finder.find(query_image=utils.download_path, collection_id=collection_id)
                 if success:
                     logger.info(f"{collection_id} was detected in the image.")
                     notification.api.sending.forwardMessages(utils.config.get("target"),utils.chat_id,[utils.message_id])
@@ -91,7 +91,7 @@ async def train_model(
     try:
         with open(file_path, "wb+") as file_object:
             shutil.copyfileobj(image.file, file_object)
-        success = trainer.train(collection)
+        success = trainer.train()
         if success:
             return {
                 "status": 200,
@@ -117,7 +117,7 @@ async def retrain_model(collection: str = Form(...)):
     Endpoint to trigger the re-training command for a given collection.
     """
     try:
-        success = trainer.train(collection)
+        success = trainer.train()
         if success:
             return {
                 "status": 200,
@@ -231,6 +231,7 @@ async def get_collections():
 
 # Asynchronous wrapper to run the FastAPI server
 async def start_fastapi():
+    logger.debug("Starting Web Server")
     config = uvicorn.Config(app, host="0.0.0.0", port=7020, log_level="info")
     server = uvicorn.Server(config)
     await server.serve()
@@ -239,6 +240,7 @@ async def start_fastapi():
 # If bot.run_forever() is a blocking call, wrapping it with asyncio.to_thread
 # allows it to run concurrently with the FastAPI server.
 async def start_whatsapp_bot():
+    logger.debug("Startting Whatsapp Bot")
     await asyncio.to_thread(bot.run_forever)
 
 # Main entry point to run both services concurrently

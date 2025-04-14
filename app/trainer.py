@@ -1,124 +1,99 @@
 import os
-import boto3
-from loguru import logger
+import joblib
+import numpy as np
 from pathlib import Path
+from loguru import logger
+from sklearn.svm import SVC
+from deepface import DeepFace
 from typing import List, Dict, Any
-from botocore.exceptions import ClientError
+
+
 
 class Trainer:
     """
-    Class for handling face collection training using AWS Rekognition.
-    Manages the creation of collections and indexing of faces.
+    Handles face embedding extraction and one-vs-all classifier training
+    for each identity. The classifiers are stored in the "classifiers" folder.
     """
-    
-    SUPPORTED_IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png')
-    
     def __init__(self):
-        """
-        Initialize the Trainer with AWS Rekognition client and base paths.
-        """
-        self.rekognition = boto3.client(
-            'rekognition',
-            region_name=os.getenv("AWS_REGION"),
-            aws_access_key_id=os.getenv("AWS_KEY"),
-            aws_secret_access_key=os.getenv("AWS_SECRET")
-        )
-        self.trainer_images_path = Path.cwd() / "images" / "trainer"
-        self.trainer_images_path.mkdir(parents=True, exist_ok=True)
+        # Define and create the dataset directory and classifiers output folder.
+        self.dataset_dir = Path.cwd() / "images" / "trainer"
+        self.dataset_dir.mkdir(parents=True, exist_ok=True)
+        self.classifiers_path = Path.cwd() / "classifiers"
+        self.classifiers_path.mkdir(parents=True, exist_ok=True)
 
-    def train(self, collection_id: str) -> bool:
+    def load_dataset(self, model_name="VGG-Face", detector_backend="opencv"):
         """
-        Train a face collection by creating it and indexing faces from images.
-        
-        Args:
-            collection_id (str): The ID of the collection to create/train
-            
+        Extracts face embeddings from images organized by subdirectory.
         Returns:
-            bool: True if training was successful, False otherwise
+            embeddings: A numpy array of face embeddings.
+            labels: A numpy array of corresponding identity labels.
         """
-        # Set up collection-specific path
-        self.trainer_images_path = Path.cwd() / "images" / "trainer" / collection_id
-        self.trainer_images_path.mkdir(parents=True, exist_ok=True)
-
-        try:
-            # Create collection if it doesn't exist
-            self._create_collection(collection_id)
-            
-            # Process and index images
-            return self._process_images(collection_id)
-            
-        except Exception as e:
-            logger.error(f"Error during training: {e}")
-            return False
-
-    def _create_collection(self, collection_id: str) -> None:
-        """
-        Create a new face collection in AWS Rekognition.
+        valid_extensions = ('.jpg', '.jpeg', '.png')
+        embeddings = []
+        labels = []
         
-        Args:
-            collection_id (str): The ID of the collection to create
-            
-        Raises:
-            ClientError: If there's an AWS service error
-        """
-        try:
-            self.rekognition.create_collection(CollectionId=collection_id)
-            logger.info(f"Collection '{collection_id}' created successfully.")
-        except self.rekognition.exceptions.ResourceAlreadyExistsException:
-            logger.info(f"Collection '{collection_id}' already exists.")
-        except ClientError as e:
-            logger.error(f"AWS error creating collection: {e}")
-            raise
-
-    def _process_images(self, collection_id: str) -> bool:
-        """
-        Process and index all images in the trainer directory.
+        # Iterate over each person's folder.
+        for person_dir in self.dataset_dir.iterdir():
+            if not person_dir.is_dir():
+                continue
+            person = person_dir.name
+            # Process each valid image file in the folder.
+            for img_path in person_dir.glob("*"):
+                if img_path.suffix.lower() in valid_extensions:
+                    try:
+                        reps = DeepFace.represent(
+                            img_path=str(img_path),
+                            model_name=model_name,
+                            detector_backend=detector_backend
+                        )
+                        # Take the first embedding from the image.
+                        embeddings.append(reps[0]["embedding"])
+                        labels.append(person)
+                        logger.info(f"Processed: {img_path}")
+                    except Exception as e:
+                        logger.error(f"Error processing {img_path}: {e}")
+                        
+        if len(embeddings) == 0:
+            raise ValueError("No embeddings were extracted. Check your dataset and paths.")
         
-        Args:
-            collection_id (str): The ID of the collection to index faces into
-            
-        Returns:
-            bool: True if all images were processed successfully
+        return np.array(embeddings), np.array(labels)
+
+    def train_per_face_classifiers(self, embeddings, labels):
         """
+        Trains one binary classifier (one-vs-all) per identity and saves each model
+        as a joblib file in the classifiers folder.
+        """
+        unique_ids = np.unique(labels)
+        for identity in unique_ids:
+            # Positive samples: embeddings with this identity.
+            pos_idx = labels == identity
+            # Negative samples: embeddings from all other identities.
+            neg_idx = labels != identity
+
+            X_pos = embeddings[pos_idx]
+            y_pos = np.ones(len(X_pos))          # Label '1' for positive samples
+            X_neg = embeddings[neg_idx]
+            y_neg = np.zeros(len(X_neg))         # Label '0' for negative samples
+            
+            # Combine the samples.
+            X = np.concatenate([X_pos, X_neg], axis=0)
+            y = np.concatenate([y_pos, y_neg], axis=0)
+            
+            # Train an SVM classifier with probability estimation.
+            classifier = SVC(kernel="linear", probability=True)
+            classifier.fit(X, y)
+            
+            # Save the trained classifier.
+            save_path = self.classifiers_path / f"{identity}_classifier.joblib"
+            joblib.dump(classifier, save_path)
+            logger.info(f"Trained and saved classifier for {identity} at {save_path}")
+
+    def train(self):
         try:
-            for filename in os.listdir(self.trainer_images_path):
-                if filename.lower().endswith(self.SUPPORTED_IMAGE_EXTENSIONS):
-                    image_path = self.trainer_images_path / filename
-                    self._index_faces(collection_id, image_path)
+            embeddings, labels = self.load_dataset()
+            self.train_per_face_classifiers(embeddings, labels)
             return True
         except Exception as e:
-            logger.error(f"Error processing images: {e}")
+            logger.error(str(e))
             return False
-
-    def _index_faces(self, collection_id: str, image_path: Path) -> None:
-        """
-        Index faces from a single image into the collection.
-        
-        Args:
-            collection_id (str): The ID of the collection to index into
-            image_path (Path): Path to the image file
-            
-        Raises:
-            Exception: If there's an error reading or processing the image
-        """
-        try:
-            with open(image_path, 'rb') as image_file:
-                image_bytes = image_file.read()
-
-            response = self.rekognition.index_faces(
-                CollectionId=collection_id,
-                Image={'Bytes': image_bytes},
-                ExternalImageId=collection_id,
-                DetectionAttributes=[]
-            )
-            
-            face_records = response.get('FaceRecords', [])
-            if face_records:
-                logger.info(f"Indexed {len(face_records)} faces from {image_path.name}")
-            else:
-                logger.warning(f"No faces detected in {image_path.name}")
-                
-        except Exception as e:
-            logger.error(f"Error indexing faces from {image_path.name}: {e}")
-            raise
 

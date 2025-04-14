@@ -1,4 +1,3 @@
-boto3
 fastapi
 fastapi-cache2
 httpx
@@ -6,10 +5,13 @@ jinja2
 loguru
 Pillow
 pydantic
-python-dotenv
 python-multipart
 PyYAML
 requests
 uvicorn
 whatsapp-api-client-python
 whatsapp-chatbot-python
+tf-keras
+deepface
+opencv-python
+numpy
