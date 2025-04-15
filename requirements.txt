@@ -8,7 +8,6 @@ python-multipart
 PyYAML
 requests
 uvicorn
-whatsapp-api-client-python
 whatsapp-chatbot-python
 tf-keras
 deepface

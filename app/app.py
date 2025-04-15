@@ -13,7 +13,6 @@ from kidfinder import KidFinder
 from fastapi_cache import FastAPICache
 from fastapi.templating import Jinja2Templates
 from fastapi_cache.decorator import cache
-from whatsapp_api_client_python import API
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
 from models.trainrequest import TrainRequest
@@ -36,7 +35,6 @@ utils = Utils()
 utils.create_application_folders()
 utils.load_config()
 
-greenAPI = API.GreenAPI(os.getenv("GREEN_API_INSTANCE"), os.getenv("GREEN_API_TOKEN"))
 bot = GreenAPIBot(os.getenv("GREEN_API_INSTANCE"), os.getenv("GREEN_API_TOKEN"))
 app = FastAPI(lifespan=lifespan)
 app.mount("/images/trainer", StaticFiles(directory=os.path.join("images", "trainer")), name="trainer_images")

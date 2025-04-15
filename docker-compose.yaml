@@ -1,5 +1,5 @@
 services:
-  app:
+  find-my-kids:
     image: techblog/find-my-kids:latest
     ports:
       - "7020:7020"
