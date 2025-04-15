@@ -2,6 +2,11 @@
 
 This application uses AWS Rekognition and WhatsApp Green API to detect and notify when specific faces appear in images sent to a WhatsApp group.
 
+## Components used in the bot:
+* [Green-API](https://green-api.com/) For Whatsapp communication.
+* [DeepFace](https://github.com/serengil/deepface) For face recognition.
+* [FastAPI](https://fastapi.tiangolo.com/) For the web server.
+
 ## Prerequisites
 
 - [Docker and Docker Compose installed](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
@@ -111,7 +116,7 @@ kids:
 target: 972000000000-1000000000@g.us
 ```
 
-* Kid1 is the name of the kid/person
+* Kid1: the name of the kid/person
 * collection_id: The Id of the collection in AWS rekognition.
 * chat_ids: list of whatsapp chats (Groups or Contacts) to monitor.
 * target: The target group or contact to forward the pictures to.
@@ -125,6 +130,9 @@ The web page will contain a table with the list of contacts and group:
 **After updating the config file, restart the container to reload the configuration**
 
 ### Training
+
+#### Manual Images Upload
+
 In order to train the Rekognition model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
 
 An error may popup, it is because there are no images related for the collections, just click on OK.
@@ -142,13 +150,32 @@ In the Gallery tab, you will see all the pictured used to train the model:
 You can click the "re-train" button to re-train the model with the pictures.
 
 
+#### Bulk Images Upload
+
+The bot also support bulk imags upload for training by adding Images to the trainer folder as follows:
+
+```
+images
+    |──trainer/
+          ├── Kid1/
+          │   ├── image1.jpg
+          │   ├── image2.jpg
+          │   └── ...
+          ├── Kid2/
+          │   ├── image1.jpg
+          │   └── ...
+          └── Kid3/
+              ├── image1.jpg
+              └── ...
+```
+
+Next, in the Gallery tab (Web UI), you will see all the pictured used to train the model:
+![re-train](screenshots/re-train.png)
+
+You can click the "re-train" button to re-train the model with the pictures.
+
+
+
 *Congrats, you can now use the bot.*
 
 
-### Things to know
-
-AWS Rekognition is included in the Free Tier for 12 Months (5000 images per month):
-![Rekognition free tier](screenshots/rekognition-free.png)
-
-After 12 months, The pricing will be 0.001$ per API call:
-![Rekognition pricing](screenshots/rekognition-pricing.png)
