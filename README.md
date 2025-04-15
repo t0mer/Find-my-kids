@@ -1,78 +1,82 @@
 # Find My Kids - WhatsApp Face Recognition Bot
 
-This application uses AWS Rekognition and WhatsApp Green API to detect and notify when specific faces appear in images sent to a WhatsApp group.
+This application integrates DeepFace with the WhatsApp Green API to detect predetermined faces in images shared within a WhatsApp group and to notify designated contacts immediately.
 
-## Components used in the bot:
-* [Green-API](https://green-api.com/) For Whatsapp communication.
-* [DeepFace](https://github.com/serengil/deepface) For face recognition.
-* [FastAPI](https://fastapi.tiangolo.com/) For the web server.
+## Components
+
+This solution leverages the following technologies:
+
+- **[Green-API](https://green-api.com/):** Facilitates WhatsApp communication.
+- **[DeepFace](https://github.com/serengil/deepface):** Provides robust face recognition capabilities.
+- **[FastAPI](https://fastapi.tiangolo.com/):** Powers the web server interface.
 
 ## Prerequisites
 
+Before proceeding with the setup, ensure that you have the following:
+
 - [Docker and Docker Compose installed](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
-- [Green API Account](https://green-api.com/)
+- A registered [Green API Account](https://green-api.com/)
+
 
 ## Setup Instructions
-### 1. Green API Setup
 
-#### Setup Green API account
-Nevigate to [https://green-api.com/en](https://green-api.com/en) and register for a new account:
-![Register](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/register.png)
+### 1. Green API Configuration
 
-Fill up your details and click on **Register**:
-![Create Account](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_acoount.png)
+#### Account Registration
 
+1. Visit [https://green-api.com/en](https://green-api.com/en) and register for a new account.
+2. Complete the registration form by entering your details and then click **Register**.
 
-Next, click on the "Create an instance":
-![Create Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_instance.png)
+   ![Register](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/register.png)
+   ![Create Account](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_acoount.png)
 
+3. Once registered, select **Create an instance**.
 
-Select the "Developer" instance (Free):
-![Developer Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/developer_instance.png)
+   ![Create Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/create_instance.png)
 
+4. Choose the **Developer** instance (Free Tier).
 
-Copy the InstanceId and Token, we need it for the integration settings:
-![Instance Details](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/instance_details.png)
+   ![Developer Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/developer_instance.png)
 
-Next, Lets connect our whatsapp with green-api. On the left side, Under API --> Account, click on QR and copy the QR URL to the browser and click on "Scan QR code"
+5. Copy the generated InstanceId and Token—these will be required for integration.
 
-![Send QR](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/send_qr.png)
+   ![Instance Details](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/instance_details.png)
 
-![Scan QR](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/scan_qr.png)
+6. To link your WhatsApp account, navigate to the API section on the left under **Account** and select **QR**. Open the provided QR URL in your browser, then click on **Scan QR code**:
 
-Next, Scan the QR code to link you whatsapp with Green API:
+   ![Send QR](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/send_qr.png)
+   ![Scan QR](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/scan_qr.png)
 
-![QR Code](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/qr.png)
+7. Scan the QR code to complete the linking process:
 
-After the account link, you will notice that the instance is active by the green light in the instance header:
-![Active Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/active_instance.png)
+   ![QR Code](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/qr.png)
 
+8. Once linked, the instance status will display a green light, indicating it is active:
 
+   ![Active Instance](https://raw.githubusercontent.com/t0mer/green-api-custom-notifier/refs/heads/main/screenshots/active_instance.png)
 
+> **Important:** Do not configure a webhook URL for your instance, as this will interfere with the bot’s functionality.
+>
+> ![Green API webhook](screenshots/green-api-webhook.png)
 
-#### ***Important Note:***
-Do not set webhook url for your instance, otherwise the bot will not work.
-![Green API webhook](screenshots/green-api-webhook.png)
+### 2. Environment Configuration
 
-
-### 2. Environment Setup
-
-1. Copy the `.env.example` file to `.env`:
-   ```bash
+1. Duplicate the sample environment file by running:
+  ```bash
    cp .env.example .env
-   ```
+```
 
 2. Edit the `.env` file with your credentials:
-   ```
-   # WhatsApp API Credentials
-   GREEN_API_INSTANCE=your_whatsapp_instance_id
-   GREEN_API_TOKEN=your_whatsapp_api_token
-   ```
+  ```
+  # WhatsApp API Credentials
+  GREEN_API_INSTANCE=your_whatsapp_instance_id
+  GREEN_API_TOKEN=your_whatsapp_api_token
+  ```
 
 ### 4. Running the Application
 
 1. Use the following docker-compose.yaml :
-   ```yaml
+  ```yaml
    services:
   app:
     image: techblog/find-my-kids:latest
