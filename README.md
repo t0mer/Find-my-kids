@@ -73,7 +73,7 @@ Before proceeding with the setup, ensure that you have the following:
   GREEN_API_TOKEN=your_whatsapp_api_token
   ```
 
-### 4. Running the Application
+### 3. Running the Application
 
 1. Use the following docker-compose.yaml :
   ```yaml
