@@ -78,14 +78,12 @@ Before proceeding with the setup, ensure that you have the following:
 1. Use the following docker-compose.yaml :
   ```yaml
    services:
-  app:
+  find-my-kids:
     image: techblog/find-my-kids:latest
+    container_name: find-my-kids
     ports:
       - "7020:7020"
     environment:
-      - AWS_REGION=${AWS_REGION}
-      - AWS_KEY=${AWS_KEY}
-      - AWS_SECRET=${AWS_SECRET}
       - GREEN_API_INSTANCE=${GREEN_API_INSTANCE}
       - GREEN_API_TOKEN=${GREEN_API_TOKEN}
     volumes:
