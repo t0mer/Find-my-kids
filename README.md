@@ -72,6 +72,9 @@ Before proceeding with the setup, ensure that you have the following:
   GREEN_API_INSTANCE=your_whatsapp_instance_id
   GREEN_API_TOKEN=your_whatsapp_api_token
   ```
+3. AWS IAM user creation
+   1. Create an AWS IAM user with permissions to use Amazon Rekognition.
+   2. Generate credentials (access & secret key) for the IAM user created in the previous step to be used later.
 
 ### 3. Running the Application
 
@@ -86,6 +89,10 @@ Before proceeding with the setup, ensure that you have the following:
     environment:
       - GREEN_API_INSTANCE=${GREEN_API_INSTANCE}
       - GREEN_API_TOKEN=${GREEN_API_TOKEN}
+      - GREEN_API_TOKEN=${GREEN_API_TOKEN}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_KEY=${AWS_KEY}
+      - AWS_SECRET=${AWS_SECRET}
     volumes:
       - ./find-my-kids/images:/app/images
       - ./find-my-kids/config:/app/config
