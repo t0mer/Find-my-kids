@@ -122,7 +122,7 @@ target: 972000000000-1000000000@g.us
 ```
 
 - Kid1: the name of the kid/person
-- collection_id: The Id of the collection in AWS rekognition.
+- collection_id: The Id of the classifier used by DeepFace.
 - chat_ids: list of whatsapp chats (Groups or Contacts) to monitor.
 - target: The target group or contact to forward the pictures to.
 
