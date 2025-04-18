@@ -21,12 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app .
 
 # Create necessary directories
-RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config /app/classifiers
+RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config /app/classifiers && chmod -R 777 .
 
 # Set environment variables
-ENV AWS_REGION=
-ENV AWS_KEY=
-ENV AWS_SECRET=
 ENV GREEN_API_INSTANCE=
 ENV GREEN_API_TOKEN=
 ENV PROBABILITY_THRESHOLD=

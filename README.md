@@ -17,7 +17,6 @@ Before proceeding with the setup, ensure that you have the following:
 - [Docker and Docker Compose installed](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
 - A registered [Green API Account](https://green-api.com/)
 
-
 ## Setup Instructions
 
 ### 1. Green API Configuration
@@ -62,12 +61,14 @@ Before proceeding with the setup, ensure that you have the following:
 ### 2. Environment Configuration
 
 1. Duplicate the sample environment file by running:
-  ```bash
+
+   ```bash
    cp .env.example .env
-```
+   ```
 
 2. Edit the `.env` file with your credentials:
-  ```
+
+  ```ini
   # WhatsApp API Credentials
   GREEN_API_INSTANCE=your_whatsapp_instance_id
   GREEN_API_TOKEN=your_whatsapp_api_token
@@ -140,7 +141,7 @@ The web page will contain a table with the list of contacts and group:
 
 In order to train the Recognition model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
 
-> **ℹ️Noticeℹ️** An error may popup, it is because there are no images related for the collections, just click on OK. 
+> **ℹ️Noticeℹ️** An error may popup, it is because there are no images related for the collections, just click on OK.
 ![No images](screenshots/no-images-error.png)
 
 Next, select the collecion you would like to train, Select a picture and click "Upload and Train" button:
@@ -179,14 +180,3 @@ Next, in the Gallery tab (Web UI), you will see all the pictured used to train t
 You can click the "re-train" button to re-train the model with the pictures.
 
 *Congrats, you can now use the bot.*
-
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
-
-## Contributors
-
-Thank you to everyone who has contributed! You can see the full list of contributors on GitHub:
-
-[View Contributors](https://github.com/t0mer/Find-my-kids/graphs/contributors)
