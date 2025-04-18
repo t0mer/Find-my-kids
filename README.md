@@ -119,7 +119,7 @@ target: 972000000000-1000000000@g.us
 ```
 
 * Kid1: the name of the kid/person
-* collection_id: The Id of the collection in AWS rekognition.
+* collection_id: The Id of the classifier used by DeepFace..
 * chat_ids: list of whatsapp chats (Groups or Contacts) to monitor.
 * target: The target group or contact to forward the pictures to.
 
@@ -135,7 +135,7 @@ The web page will contain a table with the list of contacts and group:
 
 #### Manual Images Upload
 
-In order to train the Rekognition model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
+In order to train the model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
 
 An error may popup, it is because there are no images related for the collections, just click on OK.
 ![No images](screenshots/no-images-error.png)
