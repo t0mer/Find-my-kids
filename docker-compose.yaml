@@ -7,6 +7,7 @@ services:
     environment:
       - GREEN_API_INSTANCE=${GREEN_API_INSTANCE}
       - GREEN_API_TOKEN=${GREEN_API_TOKEN}
+      - PROBABILITY_THRESHOLD=0.5
     volumes:
       - ./find-my-kids/images:/app/images
       - ./find-my-kids/config:/app/config

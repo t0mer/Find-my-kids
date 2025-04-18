@@ -17,7 +17,7 @@ class KidFinder:
     Handles face detection, cropping, and matching against a collection.
     """
     def __init__(self):
-        self.probability_threshold = 0.5
+        self.probability_threshold = os.getenv("PROBABILITY_THRESHOLD",0.5)
         self.classifiers_path = "classifiers"
         self.classifier_suffix = "_classifier.joblib"
         self.classifiers_path = Path.cwd() / self.classifiers_path
