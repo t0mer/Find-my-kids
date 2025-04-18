@@ -86,6 +86,7 @@ Before proceeding with the setup, ensure that you have the following:
     environment:
       - GREEN_API_INSTANCE=${GREEN_API_INSTANCE}
       - GREEN_API_TOKEN=${GREEN_API_TOKEN}
+      - PROBABILITY_THRESHOLD=0.5 #Set the propablity threshold for positive face identification
     volumes:
       - ./find-my-kids/images:/app/images
       - ./find-my-kids/config:/app/config
