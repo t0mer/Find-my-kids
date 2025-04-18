@@ -179,3 +179,14 @@ Next, in the Gallery tab (Web UI), you will see all the pictured used to train t
 You can click the "re-train" button to re-train the model with the pictures.
 
 *Congrats, you can now use the bot.*
+
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
+
+## Contributors
+
+Thank you to everyone who has contributed! You can see the full list of contributors on GitHub:
+
+[View Contributors](https://github.com/t0mer/Find-my-kids/graphs/contributors)
