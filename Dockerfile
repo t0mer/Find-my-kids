@@ -21,8 +21,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app .
 
 # Create necessary directories
-RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config /app/classifiers && chmod -R 777 .
-
+# RUN mkdir -p /app/images/trainer /app/images/downloaded /app/config /app/classifiers && chmod -R 777 .
+RUN chmod -R 777 .
 # Set environment variables
 ENV GREEN_API_INSTANCE=
 ENV GREEN_API_TOKEN=

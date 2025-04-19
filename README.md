@@ -143,6 +143,7 @@ In order to train the Recognition model open your browser and navigate to: http:
 
 > **ℹ️Noticeℹ️** An error may popup, it is because there are no images related for the collections, just click on OK.
 ![No images](screenshots/no-images-error.png)
+> **ℹ️Noticeℹ️** Some systems might need higher Memory for the model to load, if you get an error related to memory, please increase the memory limit.
 
 Next, select the collecion you would like to train, Select a picture and click "Upload and Train" button:
 
