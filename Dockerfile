@@ -1,5 +1,5 @@
-# Use Python 3.9 as base image
-FROM python:3.9-slim
+# Use Python 3.12 as base image
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
@@ -7,7 +7,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
