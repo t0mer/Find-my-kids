@@ -57,7 +57,7 @@ Before proceeding with the setup, ensure that you have the following:
 
 > **Important:** Do not configure a webhook URL for your instance, as this will interfere with the bot’s functionality.
 >
-> ![Green API webhook](screenshots/green-api-webhook.png)
+> ![Green API webhook](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/green-api-webhook.png)
 
 ### 2. Environment Configuration
 
@@ -130,7 +130,7 @@ In order to get the list of groups, enter the following URL: http://[server_ip]:
 
 The web page will contain a table with the list of contacts and group:
 
-![Contacts and Groups](screenshots/greenapi-contacts.png)
+![Contacts and Groups](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/greenapi-contacts.png)
 
 > **⚠️ IMPORTANT ⚠️**: After updating the config file, restart the container to reload the configuration
 
@@ -141,16 +141,16 @@ The web page will contain a table with the list of contacts and group:
 In order to train the Recognition model open your browser and navigate to: http://[SERVER_IP]:[PORT]/trainer
 
 > **ℹ️Noticeℹ️** An error may popup, it is because there are no images related for the collections, just click on OK. 
-![No images](screenshots/no-images-error.png)
+![No images](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/no-images-error.png)
 
 Next, select the collecion you would like to train, Select a picture and click "Upload and Train" button:
 
-![Upload and Train](screenshots/upload-and-train.png)
+![Upload and Train](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/upload-and-train.png)
 
-![Train Completed](screenshots/train-completed.png)
+![Train Completed](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/train-completed.png)
 
 In the Gallery tab, you will see all the pictured used to train the model:
-![re-train](screenshots/re-train.png)
+![re-train](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/re-train.png)
 
 You can click the "re-train" button to re-train the model with the pictures.
 
@@ -174,7 +174,7 @@ images
 ```
 
 Next, in the Gallery tab (Web UI), you will see all the pictured used to train the model:
-![re-train](screenshots/re-train.png)
+![re-train](https://raw.githubusercontent.com/t0mer/Find-my-kids/main/screenshots/re-train.png)
 
 You can click the "re-train" button to re-train the model with the pictures.
 
